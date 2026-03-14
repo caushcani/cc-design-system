@@ -1,0 +1,23 @@
+{
+  "name": "@cc-design-system/storybook",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "storybook:dev": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "dev": "storybook dev -p 6006"
+  },
+  "dependencies": {
+    "@cc-design-system/components": "workspace:*",
+    "@cc-design-system/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^8.1.0",
+    "@storybook/addon-essentials": "^8.1.0",
+    "@storybook/addon-interactions": "^8.1.0",
+    "@storybook/html": "^8.1.0",
+    "@storybook/html-vite": "^8.1.0",
+    "storybook": "^8.1.0",
+    "vite": "^5.2.0"
+  }
+}

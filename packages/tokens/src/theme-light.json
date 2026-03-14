@@ -1,0 +1,21 @@
+{
+  "cc": {
+    "color": {
+      "bg": {
+        "base": { "value": "#ffffff" },
+        "subtle": { "value": "#f9fafb" },
+        "muted": { "value": "#f3f4f6" }
+      },
+      "text": {
+        "primary": { "value": "#111827" },
+        "secondary": { "value": "#4b5563" },
+        "muted": { "value": "#9ca3af" },
+        "inverse": { "value": "#ffffff" }
+      },
+      "border": {
+        "default": { "value": "#e5e7eb" },
+        "strong": { "value": "#d1d5db" }
+      }
+    }
+  }
+}

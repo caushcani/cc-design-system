@@ -1,0 +1,30 @@
+{
+  "cc": {
+    "font": {
+      "family": {
+        "base": { "value": "Inter, system-ui, -apple-system, sans-serif" },
+        "mono": { "value": "'JetBrains Mono', 'Fira Code', monospace" }
+      },
+      "size": {
+        "xs": { "value": "12px" },
+        "sm": { "value": "14px" },
+        "md": { "value": "16px" },
+        "lg": { "value": "18px" },
+        "xl": { "value": "20px" },
+        "2xl": { "value": "24px" },
+        "3xl": { "value": "30px" }
+      },
+      "weight": {
+        "regular": { "value": "400" },
+        "medium": { "value": "500" },
+        "semibold": { "value": "600" },
+        "bold": { "value": "700" }
+      },
+      "line-height": {
+        "tight": { "value": "1.25" },
+        "normal": { "value": "1.5" },
+        "relaxed": { "value": "1.75" }
+      }
+    }
+  }
+}

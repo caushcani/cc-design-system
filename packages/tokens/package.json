@@ -1,0 +1,17 @@
+{
+  "name": "@cc-design-system/tokens",
+  "version": "0.0.1",
+  "description": "Design tokens for CC Design System",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./css": "./dist/tokens.css"
+  },
+  "scripts": {
+    "build": "style-dictionary build --config sd.config.js",
+    "dev": "style-dictionary build --config sd.config.js --watch"
+  },
+  "devDependencies": {
+    "style-dictionary": "^3.9.2"
+  }
+}
