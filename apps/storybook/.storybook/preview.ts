@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/html';
 import { defineCustomElements } from '@cc-design-system/components/loader';
+import '@cc-design-system/tokens/css';
 
 // Register all cc- custom elements
 defineCustomElements();
