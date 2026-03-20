@@ -1,0 +1,81 @@
+:host {
+  display: inline-flex;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--cc-font-family-base);
+  font-weight: var(--cc-font-weight-medium);
+  white-space: nowrap;
+  border-radius: var(--cc-radius-sm);
+
+  // Sizes
+  &--sm {
+    font-size: var(--cc-font-size-xs);
+    padding: 0 var(--cc-spacing-xs);
+    height: 18px;
+  }
+
+  &--md {
+    font-size: var(--cc-font-size-xs);
+    padding: var(--cc-spacing-2xs) var(--cc-spacing-sm);
+    height: 22px;
+  }
+
+  // Pill modifier
+  &--pill {
+    border-radius: var(--cc-radius-full);
+  }
+
+  // Soft (default) — tinted background
+  &--primary {
+    background-color: var(--cc-color-primary-100);
+    color: var(--cc-color-primary-700);
+  }
+  &--success {
+    background-color: #dcfce7;
+    color: var(--cc-color-success-600);
+  }
+  &--warning {
+    background-color: #fef3c7;
+    color: var(--cc-color-warning-600);
+  }
+  &--danger {
+    background-color: #fee2e2;
+    color: var(--cc-color-danger-600);
+  }
+  &--neutral {
+    background-color: var(--cc-color-neutral-100);
+    color: var(--cc-color-neutral-700);
+  }
+
+  // Solid — filled background, white text
+  &--solid {
+    &.cc-badge--primary {
+      background-color: var(--cc-color-primary-500);
+      color: var(--cc-color-white);
+    }
+    &.cc-badge--success {
+      background-color: var(--cc-color-success-500);
+      color: var(--cc-color-white);
+    }
+    &.cc-badge--warning {
+      background-color: var(--cc-color-warning-500);
+      color: var(--cc-color-white);
+    }
+    &.cc-badge--danger {
+      background-color: var(--cc-color-danger-500);
+      color: var(--cc-color-white);
+    }
+    &.cc-badge--neutral {
+      background-color: var(--cc-color-neutral-500);
+      color: var(--cc-color-white);
+    }
+  }
+}

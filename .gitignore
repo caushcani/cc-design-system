@@ -8,6 +8,10 @@ loader/
 storybook-static/
 coverage/
 
+# Stencil generated files
+packages/components/src/components.d.ts
+packages/components/src/**/readme.md
+
 # Turbo
 .turbo/
 
