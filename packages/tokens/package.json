@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "style-dictionary build --config sd.config.js",
-    "dev": "style-dictionary build --config sd.config.js --watch"
+    "dev": "style-dictionary build --config sd.config.js"
   },
   "devDependencies": {
     "style-dictionary": "^3.9.2"

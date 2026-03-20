@@ -24,6 +24,10 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "@cc-design-system/tokens#dev": {
+      "cache": false,
+      "persistent": false
     }
   }
 }
