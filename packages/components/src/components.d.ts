@@ -6,6 +6,28 @@
  */
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
+  interface CcAlert {
+    /**
+     * Show a dismiss (×) button
+     * @default false
+     */
+    dismissible: boolean;
+    /**
+     * Bold title text displayed above the body
+     * @default ''
+     */
+    heading: string;
+    /**
+     * Hide the built-in icon
+     * @default false
+     */
+    hideIcon: boolean;
+    /**
+     * Visual variant
+     * @default 'info'
+     */
+    variant: 'info' | 'success' | 'warning' | 'danger';
+  }
   interface CcBadge {
     /**
      * Pill shape (fully rounded) vs subtle rounded corners
@@ -143,6 +165,10 @@ export namespace Components {
     staticBackdrop: boolean;
   }
 }
+export interface CcAlertCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLCcAlertElement;
+}
 export interface CcInputCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLCcInputElement;
@@ -152,6 +178,61 @@ export interface CcModalCustomEvent<T> extends CustomEvent<T> {
   target: HTMLCcModalElement;
 }
 declare global {
+  interface HTMLCcAlertElementEventMap {
+    ccDismiss: void;
+  }
+  interface HTMLCcAlertElement extends Components.CcAlert, HTMLStencilElement {
+    addEventListener<K extends keyof HTMLCcAlertElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcAlertElement,
+        ev: CcAlertCustomEvent<HTMLCcAlertElementEventMap[K]>,
+      ) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLCcAlertElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcAlertElement,
+        ev: CcAlertCustomEvent<HTMLCcAlertElementEventMap[K]>,
+      ) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  }
+  var HTMLCcAlertElement: {
+    prototype: HTMLCcAlertElement;
+    new (): HTMLCcAlertElement;
+  };
   interface HTMLCcBadgeElement extends Components.CcBadge, HTMLStencilElement {}
   var HTMLCcBadgeElement: {
     prototype: HTMLCcBadgeElement;
@@ -275,6 +356,7 @@ declare global {
     new (): HTMLCcModalElement;
   };
   interface HTMLElementTagNameMap {
+    'cc-alert': HTMLCcAlertElement;
     'cc-badge': HTMLCcBadgeElement;
     'cc-button': HTMLCcButtonElement;
     'cc-input': HTMLCcInputElement;
@@ -282,6 +364,32 @@ declare global {
   }
 }
 declare namespace LocalJSX {
+  interface CcAlert {
+    /**
+     * Show a dismiss (×) button
+     * @default false
+     */
+    dismissible?: boolean;
+    /**
+     * Bold title text displayed above the body
+     * @default ''
+     */
+    heading?: string;
+    /**
+     * Hide the built-in icon
+     * @default false
+     */
+    hideIcon?: boolean;
+    /**
+     * Emitted when the dismiss button is clicked
+     */
+    onCcDismiss?: (event: CcAlertCustomEvent<void>) => void;
+    /**
+     * Visual variant
+     * @default 'info'
+     */
+    variant?: 'info' | 'success' | 'warning' | 'danger';
+  }
   interface CcBadge {
     /**
      * Pill shape (fully rounded) vs subtle rounded corners
@@ -433,6 +541,12 @@ declare namespace LocalJSX {
     pill: boolean;
     soft: boolean;
   }
+  interface CcAlertAttributes {
+    variant: 'info' | 'success' | 'warning' | 'danger';
+    heading: string;
+    dismissible: boolean;
+    hideIcon: boolean;
+  }
   interface CcButtonAttributes {
     variant: 'solid' | 'outline' | 'ghost';
     size: 'sm' | 'md' | 'lg';
@@ -461,6 +575,11 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
+    'cc-alert': Omit<CcAlert, keyof CcAlertAttributes> & {
+      [K in keyof CcAlert & keyof CcAlertAttributes]?: CcAlert[K];
+    } & { [K in keyof CcAlert & keyof CcAlertAttributes as `attr:${K}`]?: CcAlertAttributes[K] } & {
+      [K in keyof CcAlert & keyof CcAlertAttributes as `prop:${K}`]?: CcAlert[K];
+    };
     'cc-badge': Omit<CcBadge, keyof CcBadgeAttributes> & {
       [K in keyof CcBadge & keyof CcBadgeAttributes]?: CcBadge[K];
     } & { [K in keyof CcBadge & keyof CcBadgeAttributes as `attr:${K}`]?: CcBadgeAttributes[K] } & {
@@ -487,6 +606,8 @@ export { LocalJSX as JSX };
 declare module '@stencil/core' {
   export namespace JSX {
     interface IntrinsicElements {
+      'cc-alert': LocalJSX.IntrinsicElements['cc-alert'] &
+        JSXBase.HTMLAttributes<HTMLCcAlertElement>;
       'cc-badge': LocalJSX.IntrinsicElements['cc-badge'] &
         JSXBase.HTMLAttributes<HTMLCcBadgeElement>;
       'cc-button': LocalJSX.IntrinsicElements['cc-button'] &
