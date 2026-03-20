@@ -28,6 +28,48 @@ export namespace Components {
      */
     variant: 'solid' | 'outline' | 'ghost';
   }
+  interface CcCheckbox {
+    /**
+     * Whether the checkbox is checked
+     * @default false
+     */
+    checked: boolean;
+    /**
+     * Disables the checkbox
+     * @default false
+     */
+    disabled: boolean;
+    /**
+     * Error message — also puts the checkbox in an error state
+     * @default ''
+     */
+    error: string;
+    /**
+     * Helper text displayed below the checkbox
+     * @default ''
+     */
+    hint: string;
+    /**
+     * Indeterminate state — visually shows a dash, checked is ignored
+     * @default false
+     */
+    indeterminate: boolean;
+    /**
+     * Associates checkbox with a form
+     * @default ''
+     */
+    name: string;
+    /**
+     * Marks the checkbox as required
+     * @default false
+     */
+    required: boolean;
+    /**
+     * Value submitted with the form
+     * @default ''
+     */
+    value: string;
+  }
   interface CcInput {
     /**
      * Disables the input
@@ -86,6 +128,10 @@ export namespace Components {
     value: string;
   }
 }
+export interface CcCheckboxCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLCcCheckboxElement;
+}
 export interface CcInputCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLCcInputElement;
@@ -95,6 +141,61 @@ declare global {
   var HTMLCcButtonElement: {
     prototype: HTMLCcButtonElement;
     new (): HTMLCcButtonElement;
+  };
+  interface HTMLCcCheckboxElementEventMap {
+    ccChange: boolean;
+  }
+  interface HTMLCcCheckboxElement extends Components.CcCheckbox, HTMLStencilElement {
+    addEventListener<K extends keyof HTMLCcCheckboxElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcCheckboxElement,
+        ev: CcCheckboxCustomEvent<HTMLCcCheckboxElementEventMap[K]>,
+      ) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLCcCheckboxElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcCheckboxElement,
+        ev: CcCheckboxCustomEvent<HTMLCcCheckboxElementEventMap[K]>,
+      ) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  }
+  var HTMLCcCheckboxElement: {
+    prototype: HTMLCcCheckboxElement;
+    new (): HTMLCcCheckboxElement;
   };
   interface HTMLCcInputElementEventMap {
     ccInput: string;
@@ -155,6 +256,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'cc-button': HTMLCcButtonElement;
+    'cc-checkbox': HTMLCcCheckboxElement;
     'cc-input': HTMLCcInputElement;
   }
 }
@@ -180,6 +282,52 @@ declare namespace LocalJSX {
      * @default 'solid'
      */
     variant?: 'solid' | 'outline' | 'ghost';
+  }
+  interface CcCheckbox {
+    /**
+     * Whether the checkbox is checked
+     * @default false
+     */
+    checked?: boolean;
+    /**
+     * Disables the checkbox
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Error message — also puts the checkbox in an error state
+     * @default ''
+     */
+    error?: string;
+    /**
+     * Helper text displayed below the checkbox
+     * @default ''
+     */
+    hint?: string;
+    /**
+     * Indeterminate state — visually shows a dash, checked is ignored
+     * @default false
+     */
+    indeterminate?: boolean;
+    /**
+     * Associates checkbox with a form
+     * @default ''
+     */
+    name?: string;
+    /**
+     * Emitted when the checked state changes
+     */
+    onCcChange?: (event: CcCheckboxCustomEvent<boolean>) => void;
+    /**
+     * Marks the checkbox as required
+     * @default false
+     */
+    required?: boolean;
+    /**
+     * Value submitted with the form
+     * @default ''
+     */
+    value?: string;
   }
   interface CcInput {
     /**
@@ -257,6 +405,16 @@ declare namespace LocalJSX {
     disabled: boolean;
     type: 'button' | 'submit' | 'reset';
   }
+  interface CcCheckboxAttributes {
+    checked: boolean;
+    indeterminate: boolean;
+    disabled: boolean;
+    required: boolean;
+    name: string;
+    value: string;
+    hint: string;
+    error: string;
+  }
   interface CcInputAttributes {
     type: 'text' | 'email' | 'password' | 'search' | 'url' | 'tel' | 'number';
     value: string;
@@ -277,6 +435,11 @@ declare namespace LocalJSX {
     } & {
       [K in keyof CcButton & keyof CcButtonAttributes as `attr:${K}`]?: CcButtonAttributes[K];
     } & { [K in keyof CcButton & keyof CcButtonAttributes as `prop:${K}`]?: CcButton[K] };
+    'cc-checkbox': Omit<CcCheckbox, keyof CcCheckboxAttributes> & {
+      [K in keyof CcCheckbox & keyof CcCheckboxAttributes]?: CcCheckbox[K];
+    } & {
+      [K in keyof CcCheckbox & keyof CcCheckboxAttributes as `attr:${K}`]?: CcCheckboxAttributes[K];
+    } & { [K in keyof CcCheckbox & keyof CcCheckboxAttributes as `prop:${K}`]?: CcCheckbox[K] };
     'cc-input': Omit<CcInput, keyof CcInputAttributes> & {
       [K in keyof CcInput & keyof CcInputAttributes]?: CcInput[K];
     } & { [K in keyof CcInput & keyof CcInputAttributes as `attr:${K}`]?: CcInputAttributes[K] } & {
@@ -290,6 +453,8 @@ declare module '@stencil/core' {
     interface IntrinsicElements {
       'cc-button': LocalJSX.IntrinsicElements['cc-button'] &
         JSXBase.HTMLAttributes<HTMLCcButtonElement>;
+      'cc-checkbox': LocalJSX.IntrinsicElements['cc-checkbox'] &
+        JSXBase.HTMLAttributes<HTMLCcCheckboxElement>;
       'cc-input': LocalJSX.IntrinsicElements['cc-input'] &
         JSXBase.HTMLAttributes<HTMLCcInputElement>;
     }
