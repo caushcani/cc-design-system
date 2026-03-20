@@ -2,6 +2,7 @@
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property      | Attribute     | Description                                            | Type                   | Default |
@@ -16,6 +17,7 @@
 | `size`        | `size`        | Size variant                                           | `"lg" \| "md" \| "sm"` | `'md'`  |
 | `value`       | `value`       | Bound value — must match one of the option values      | `string`               | `''`    |
 
+
 ## Events
 
 | Event      | Description                             | Type                  |
@@ -24,6 +26,7 @@
 | `ccChange` | Emitted when the selected value changes | `CustomEvent<string>` |
 | `ccFocus`  | Emitted when the select gains focus     | `CustomEvent<void>`   |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
