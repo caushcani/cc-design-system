@@ -28,6 +28,28 @@ export namespace Components {
      */
     variant: 'info' | 'success' | 'warning' | 'danger';
   }
+  interface CcBadge {
+    /**
+     * Pill shape (fully rounded) vs subtle rounded corners
+     * @default false
+     */
+    pill: boolean;
+    /**
+     * Size of the badge
+     * @default 'md'
+     */
+    size: 'sm' | 'md';
+    /**
+     * Soft tinted style vs solid filled
+     * @default true
+     */
+    soft: boolean;
+    /**
+     * Visual variant
+     * @default 'neutral'
+     */
+    variant: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
+  }
   interface CcButton {
     /**
      * Disables the button and prevents interaction
@@ -107,6 +129,41 @@ export namespace Components {
      */
     value: string;
   }
+  interface CcModal {
+    /**
+     * Heading text displayed in the modal header
+     * @default ''
+     */
+    heading: string;
+    /**
+     * Closes the modal
+     */
+    hide: () => Promise<void>;
+    /**
+     * Hides the close (×) button in the header
+     * @default false
+     */
+    hideClose: boolean;
+    /**
+     * Controls whether the modal is visible
+     * @default false
+     */
+    open: boolean;
+    /**
+     * Opens the modal
+     */
+    show: () => Promise<void>;
+    /**
+     * Size of the modal dialog
+     * @default 'md'
+     */
+    size: 'sm' | 'md' | 'lg' | 'full';
+    /**
+     * Prevents closing when clicking the backdrop
+     * @default false
+     */
+    staticBackdrop: boolean;
+  }
 }
 export interface CcAlertCustomEvent<T> extends CustomEvent<T> {
   detail: T;
@@ -115,6 +172,10 @@ export interface CcAlertCustomEvent<T> extends CustomEvent<T> {
 export interface CcInputCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLCcInputElement;
+}
+export interface CcModalCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLCcModalElement;
 }
 declare global {
   interface HTMLCcAlertElementEventMap {
@@ -171,6 +232,11 @@ declare global {
   var HTMLCcAlertElement: {
     prototype: HTMLCcAlertElement;
     new (): HTMLCcAlertElement;
+  };
+  interface HTMLCcBadgeElement extends Components.CcBadge, HTMLStencilElement {}
+  var HTMLCcBadgeElement: {
+    prototype: HTMLCcBadgeElement;
+    new (): HTMLCcBadgeElement;
   };
   interface HTMLCcButtonElement extends Components.CcButton, HTMLStencilElement {}
   var HTMLCcButtonElement: {
@@ -234,10 +300,67 @@ declare global {
     prototype: HTMLCcInputElement;
     new (): HTMLCcInputElement;
   };
+  interface HTMLCcModalElementEventMap {
+    ccClose: void;
+  }
+  interface HTMLCcModalElement extends Components.CcModal, HTMLStencilElement {
+    addEventListener<K extends keyof HTMLCcModalElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcModalElement,
+        ev: CcModalCustomEvent<HTMLCcModalElementEventMap[K]>,
+      ) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLCcModalElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcModalElement,
+        ev: CcModalCustomEvent<HTMLCcModalElementEventMap[K]>,
+      ) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  }
+  var HTMLCcModalElement: {
+    prototype: HTMLCcModalElement;
+    new (): HTMLCcModalElement;
+  };
   interface HTMLElementTagNameMap {
     'cc-alert': HTMLCcAlertElement;
+    'cc-badge': HTMLCcBadgeElement;
     'cc-button': HTMLCcButtonElement;
     'cc-input': HTMLCcInputElement;
+    'cc-modal': HTMLCcModalElement;
   }
 }
 declare namespace LocalJSX {
@@ -266,6 +389,28 @@ declare namespace LocalJSX {
      * @default 'info'
      */
     variant?: 'info' | 'success' | 'warning' | 'danger';
+  }
+  interface CcBadge {
+    /**
+     * Pill shape (fully rounded) vs subtle rounded corners
+     * @default false
+     */
+    pill?: boolean;
+    /**
+     * Size of the badge
+     * @default 'md'
+     */
+    size?: 'sm' | 'md';
+    /**
+     * Soft tinted style vs solid filled
+     * @default true
+     */
+    soft?: boolean;
+    /**
+     * Visual variant
+     * @default 'neutral'
+     */
+    variant?: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
   }
   interface CcButton {
     /**
@@ -358,7 +503,44 @@ declare namespace LocalJSX {
      */
     value?: string;
   }
+  interface CcModal {
+    /**
+     * Heading text displayed in the modal header
+     * @default ''
+     */
+    heading?: string;
+    /**
+     * Hides the close (×) button in the header
+     * @default false
+     */
+    hideClose?: boolean;
+    /**
+     * Emitted when the modal requests to be closed
+     */
+    onCcClose?: (event: CcModalCustomEvent<void>) => void;
+    /**
+     * Controls whether the modal is visible
+     * @default false
+     */
+    open?: boolean;
+    /**
+     * Size of the modal dialog
+     * @default 'md'
+     */
+    size?: 'sm' | 'md' | 'lg' | 'full';
+    /**
+     * Prevents closing when clicking the backdrop
+     * @default false
+     */
+    staticBackdrop?: boolean;
+  }
 
+  interface CcBadgeAttributes {
+    variant: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
+    size: 'sm' | 'md';
+    pill: boolean;
+    soft: boolean;
+  }
   interface CcAlertAttributes {
     variant: 'info' | 'success' | 'warning' | 'danger';
     heading: string;
@@ -384,12 +566,24 @@ declare namespace LocalJSX {
     required: boolean;
     name: string;
   }
+  interface CcModalAttributes {
+    open: boolean;
+    heading: string;
+    size: 'sm' | 'md' | 'lg' | 'full';
+    hideClose: boolean;
+    staticBackdrop: boolean;
+  }
 
   interface IntrinsicElements {
     'cc-alert': Omit<CcAlert, keyof CcAlertAttributes> & {
       [K in keyof CcAlert & keyof CcAlertAttributes]?: CcAlert[K];
     } & { [K in keyof CcAlert & keyof CcAlertAttributes as `attr:${K}`]?: CcAlertAttributes[K] } & {
       [K in keyof CcAlert & keyof CcAlertAttributes as `prop:${K}`]?: CcAlert[K];
+    };
+    'cc-badge': Omit<CcBadge, keyof CcBadgeAttributes> & {
+      [K in keyof CcBadge & keyof CcBadgeAttributes]?: CcBadge[K];
+    } & { [K in keyof CcBadge & keyof CcBadgeAttributes as `attr:${K}`]?: CcBadgeAttributes[K] } & {
+      [K in keyof CcBadge & keyof CcBadgeAttributes as `prop:${K}`]?: CcBadge[K];
     };
     'cc-button': Omit<CcButton, keyof CcButtonAttributes> & {
       [K in keyof CcButton & keyof CcButtonAttributes]?: CcButton[K];
@@ -401,6 +595,11 @@ declare namespace LocalJSX {
     } & { [K in keyof CcInput & keyof CcInputAttributes as `attr:${K}`]?: CcInputAttributes[K] } & {
       [K in keyof CcInput & keyof CcInputAttributes as `prop:${K}`]?: CcInput[K];
     };
+    'cc-modal': Omit<CcModal, keyof CcModalAttributes> & {
+      [K in keyof CcModal & keyof CcModalAttributes]?: CcModal[K];
+    } & { [K in keyof CcModal & keyof CcModalAttributes as `attr:${K}`]?: CcModalAttributes[K] } & {
+      [K in keyof CcModal & keyof CcModalAttributes as `prop:${K}`]?: CcModal[K];
+    };
   }
 }
 export { LocalJSX as JSX };
@@ -409,10 +608,14 @@ declare module '@stencil/core' {
     interface IntrinsicElements {
       'cc-alert': LocalJSX.IntrinsicElements['cc-alert'] &
         JSXBase.HTMLAttributes<HTMLCcAlertElement>;
+      'cc-badge': LocalJSX.IntrinsicElements['cc-badge'] &
+        JSXBase.HTMLAttributes<HTMLCcBadgeElement>;
       'cc-button': LocalJSX.IntrinsicElements['cc-button'] &
         JSXBase.HTMLAttributes<HTMLCcButtonElement>;
       'cc-input': LocalJSX.IntrinsicElements['cc-input'] &
         JSXBase.HTMLAttributes<HTMLCcInputElement>;
+      'cc-modal': LocalJSX.IntrinsicElements['cc-modal'] &
+        JSXBase.HTMLAttributes<HTMLCcModalElement>;
     }
   }
 }
