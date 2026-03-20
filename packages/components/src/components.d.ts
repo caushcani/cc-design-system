@@ -85,10 +85,61 @@ export namespace Components {
      */
     value: string;
   }
+  interface CcSelect {
+    /**
+     * Disables the select
+     * @default false
+     */
+    disabled: boolean;
+    /**
+     * Error message — also puts the select in an error state
+     * @default ''
+     */
+    error: string;
+    /**
+     * Helper text displayed below the select
+     * @default ''
+     */
+    hint: string;
+    /**
+     * Label displayed above the select
+     * @default ''
+     */
+    label: string;
+    /**
+     * Associates select with a form element id
+     * @default ''
+     */
+    name: string;
+    /**
+     * Placeholder option shown when no value is selected
+     * @default ''
+     */
+    placeholder: string;
+    /**
+     * Marks the select as required
+     * @default false
+     */
+    required: boolean;
+    /**
+     * Size variant
+     * @default 'md'
+     */
+    size: 'sm' | 'md' | 'lg';
+    /**
+     * Bound value — must match one of the option values
+     * @default ''
+     */
+    value: string;
+  }
 }
 export interface CcInputCustomEvent<T> extends CustomEvent<T> {
   detail: T;
   target: HTMLCcInputElement;
+}
+export interface CcSelectCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLCcSelectElement;
 }
 declare global {
   interface HTMLCcButtonElement extends Components.CcButton, HTMLStencilElement {}
@@ -153,9 +204,67 @@ declare global {
     prototype: HTMLCcInputElement;
     new (): HTMLCcInputElement;
   };
+  interface HTMLCcSelectElementEventMap {
+    ccChange: string;
+    ccBlur: void;
+    ccFocus: void;
+  }
+  interface HTMLCcSelectElement extends Components.CcSelect, HTMLStencilElement {
+    addEventListener<K extends keyof HTMLCcSelectElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcSelectElement,
+        ev: CcSelectCustomEvent<HTMLCcSelectElementEventMap[K]>,
+      ) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLCcSelectElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcSelectElement,
+        ev: CcSelectCustomEvent<HTMLCcSelectElementEventMap[K]>,
+      ) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  }
+  var HTMLCcSelectElement: {
+    prototype: HTMLCcSelectElement;
+    new (): HTMLCcSelectElement;
+  };
   interface HTMLElementTagNameMap {
     'cc-button': HTMLCcButtonElement;
     'cc-input': HTMLCcInputElement;
+    'cc-select': HTMLCcSelectElement;
   }
 }
 declare namespace LocalJSX {
@@ -250,6 +359,65 @@ declare namespace LocalJSX {
      */
     value?: string;
   }
+  interface CcSelect {
+    /**
+     * Disables the select
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Error message — also puts the select in an error state
+     * @default ''
+     */
+    error?: string;
+    /**
+     * Helper text displayed below the select
+     * @default ''
+     */
+    hint?: string;
+    /**
+     * Label displayed above the select
+     * @default ''
+     */
+    label?: string;
+    /**
+     * Associates select with a form element id
+     * @default ''
+     */
+    name?: string;
+    /**
+     * Emitted when the select loses focus
+     */
+    onCcBlur?: (event: CcSelectCustomEvent<void>) => void;
+    /**
+     * Emitted when the selected value changes
+     */
+    onCcChange?: (event: CcSelectCustomEvent<string>) => void;
+    /**
+     * Emitted when the select gains focus
+     */
+    onCcFocus?: (event: CcSelectCustomEvent<void>) => void;
+    /**
+     * Placeholder option shown when no value is selected
+     * @default ''
+     */
+    placeholder?: string;
+    /**
+     * Marks the select as required
+     * @default false
+     */
+    required?: boolean;
+    /**
+     * Size variant
+     * @default 'md'
+     */
+    size?: 'sm' | 'md' | 'lg';
+    /**
+     * Bound value — must match one of the option values
+     * @default ''
+     */
+    value?: string;
+  }
 
   interface CcButtonAttributes {
     variant: 'solid' | 'outline' | 'ghost';
@@ -270,6 +438,17 @@ declare namespace LocalJSX {
     required: boolean;
     name: string;
   }
+  interface CcSelectAttributes {
+    value: string;
+    label: string;
+    placeholder: string;
+    hint: string;
+    error: string;
+    size: 'sm' | 'md' | 'lg';
+    disabled: boolean;
+    required: boolean;
+    name: string;
+  }
 
   interface IntrinsicElements {
     'cc-button': Omit<CcButton, keyof CcButtonAttributes> & {
@@ -282,6 +461,11 @@ declare namespace LocalJSX {
     } & { [K in keyof CcInput & keyof CcInputAttributes as `attr:${K}`]?: CcInputAttributes[K] } & {
       [K in keyof CcInput & keyof CcInputAttributes as `prop:${K}`]?: CcInput[K];
     };
+    'cc-select': Omit<CcSelect, keyof CcSelectAttributes> & {
+      [K in keyof CcSelect & keyof CcSelectAttributes]?: CcSelect[K];
+    } & {
+      [K in keyof CcSelect & keyof CcSelectAttributes as `attr:${K}`]?: CcSelectAttributes[K];
+    } & { [K in keyof CcSelect & keyof CcSelectAttributes as `prop:${K}`]?: CcSelect[K] };
   }
 }
 export { LocalJSX as JSX };
@@ -292,6 +476,8 @@ declare module '@stencil/core' {
         JSXBase.HTMLAttributes<HTMLCcButtonElement>;
       'cc-input': LocalJSX.IntrinsicElements['cc-input'] &
         JSXBase.HTMLAttributes<HTMLCcInputElement>;
+      'cc-select': LocalJSX.IntrinsicElements['cc-select'] &
+        JSXBase.HTMLAttributes<HTMLCcSelectElement>;
     }
   }
 }
