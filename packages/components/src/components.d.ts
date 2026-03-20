@@ -6,6 +6,28 @@
  */
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 export namespace Components {
+  interface CcBadge {
+    /**
+     * Pill shape (fully rounded) vs subtle rounded corners
+     * @default false
+     */
+    pill: boolean;
+    /**
+     * Size of the badge
+     * @default 'md'
+     */
+    size: 'sm' | 'md';
+    /**
+     * Soft tinted style vs solid filled
+     * @default true
+     */
+    soft: boolean;
+    /**
+     * Visual variant
+     * @default 'neutral'
+     */
+    variant: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
+  }
   interface CcButton {
     /**
      * Disables the button and prevents interaction
@@ -130,6 +152,11 @@ export interface CcModalCustomEvent<T> extends CustomEvent<T> {
   target: HTMLCcModalElement;
 }
 declare global {
+  interface HTMLCcBadgeElement extends Components.CcBadge, HTMLStencilElement {}
+  var HTMLCcBadgeElement: {
+    prototype: HTMLCcBadgeElement;
+    new (): HTMLCcBadgeElement;
+  };
   interface HTMLCcButtonElement extends Components.CcButton, HTMLStencilElement {}
   var HTMLCcButtonElement: {
     prototype: HTMLCcButtonElement;
@@ -248,12 +275,35 @@ declare global {
     new (): HTMLCcModalElement;
   };
   interface HTMLElementTagNameMap {
+    'cc-badge': HTMLCcBadgeElement;
     'cc-button': HTMLCcButtonElement;
     'cc-input': HTMLCcInputElement;
     'cc-modal': HTMLCcModalElement;
   }
 }
 declare namespace LocalJSX {
+  interface CcBadge {
+    /**
+     * Pill shape (fully rounded) vs subtle rounded corners
+     * @default false
+     */
+    pill?: boolean;
+    /**
+     * Size of the badge
+     * @default 'md'
+     */
+    size?: 'sm' | 'md';
+    /**
+     * Soft tinted style vs solid filled
+     * @default true
+     */
+    soft?: boolean;
+    /**
+     * Visual variant
+     * @default 'neutral'
+     */
+    variant?: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
+  }
   interface CcButton {
     /**
      * Disables the button and prevents interaction
@@ -377,6 +427,12 @@ declare namespace LocalJSX {
     staticBackdrop?: boolean;
   }
 
+  interface CcBadgeAttributes {
+    variant: 'primary' | 'success' | 'warning' | 'danger' | 'neutral';
+    size: 'sm' | 'md';
+    pill: boolean;
+    soft: boolean;
+  }
   interface CcButtonAttributes {
     variant: 'solid' | 'outline' | 'ghost';
     size: 'sm' | 'md' | 'lg';
@@ -405,6 +461,11 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
+    'cc-badge': Omit<CcBadge, keyof CcBadgeAttributes> & {
+      [K in keyof CcBadge & keyof CcBadgeAttributes]?: CcBadge[K];
+    } & { [K in keyof CcBadge & keyof CcBadgeAttributes as `attr:${K}`]?: CcBadgeAttributes[K] } & {
+      [K in keyof CcBadge & keyof CcBadgeAttributes as `prop:${K}`]?: CcBadge[K];
+    };
     'cc-button': Omit<CcButton, keyof CcButtonAttributes> & {
       [K in keyof CcButton & keyof CcButtonAttributes]?: CcButton[K];
     } & {
@@ -426,6 +487,8 @@ export { LocalJSX as JSX };
 declare module '@stencil/core' {
   export namespace JSX {
     interface IntrinsicElements {
+      'cc-badge': LocalJSX.IntrinsicElements['cc-badge'] &
+        JSXBase.HTMLAttributes<HTMLCcBadgeElement>;
       'cc-button': LocalJSX.IntrinsicElements['cc-button'] &
         JSXBase.HTMLAttributes<HTMLCcButtonElement>;
       'cc-input': LocalJSX.IntrinsicElements['cc-input'] &
