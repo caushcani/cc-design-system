@@ -14,9 +14,6 @@ export const config: Config = {
       exportsCondition: 'module',
     },
     {
-      type: 'docs-readme',
-    },
-    {
       type: 'www',
       serviceWorker: null,
     },
