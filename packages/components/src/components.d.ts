@@ -28,6 +28,67 @@ export namespace Components {
      */
     variant: 'solid' | 'outline' | 'ghost';
   }
+  interface CcInput {
+    /**
+     * Disables the input
+     * @default false
+     */
+    disabled: boolean;
+    /**
+     * Error message — also puts the input in an error state
+     * @default ''
+     */
+    error: string;
+    /**
+     * Helper text displayed below the input
+     * @default ''
+     */
+    hint: string;
+    /**
+     * Label displayed above the input
+     * @default ''
+     */
+    label: string;
+    /**
+     * Associates input with a form element id
+     * @default ''
+     */
+    name: string;
+    /**
+     * Placeholder text
+     * @default ''
+     */
+    placeholder: string;
+    /**
+     * Makes the input read-only
+     * @default false
+     */
+    readonly: boolean;
+    /**
+     * Marks the input as required
+     * @default false
+     */
+    required: boolean;
+    /**
+     * Size variant
+     * @default 'md'
+     */
+    size: 'sm' | 'md' | 'lg';
+    /**
+     * Input type
+     * @default 'text'
+     */
+    type: 'text' | 'email' | 'password' | 'search' | 'url' | 'tel' | 'number';
+    /**
+     * Bound value
+     * @default ''
+     */
+    value: string;
+  }
+}
+export interface CcInputCustomEvent<T> extends CustomEvent<T> {
+  detail: T;
+  target: HTMLCcInputElement;
 }
 declare global {
   interface HTMLCcButtonElement extends Components.CcButton, HTMLStencilElement {}
@@ -35,8 +96,66 @@ declare global {
     prototype: HTMLCcButtonElement;
     new (): HTMLCcButtonElement;
   };
+  interface HTMLCcInputElementEventMap {
+    ccInput: string;
+    ccBlur: void;
+    ccFocus: void;
+  }
+  interface HTMLCcInputElement extends Components.CcInput, HTMLStencilElement {
+    addEventListener<K extends keyof HTMLCcInputElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcInputElement,
+        ev: CcInputCustomEvent<HTMLCcInputElementEventMap[K]>,
+      ) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    addEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | AddEventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLCcInputElementEventMap>(
+      type: K,
+      listener: (
+        this: HTMLCcInputElement,
+        ev: CcInputCustomEvent<HTMLCcInputElementEventMap[K]>,
+      ) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof DocumentEventMap>(
+      type: K,
+      listener: (this: Document, ev: DocumentEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener<K extends keyof HTMLElementEventMap>(
+      type: K,
+      listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
+      options?: boolean | EventListenerOptions,
+    ): void;
+    removeEventListener(
+      type: string,
+      listener: EventListenerOrEventListenerObject,
+      options?: boolean | EventListenerOptions,
+    ): void;
+  }
+  var HTMLCcInputElement: {
+    prototype: HTMLCcInputElement;
+    new (): HTMLCcInputElement;
+  };
   interface HTMLElementTagNameMap {
     'cc-button': HTMLCcButtonElement;
+    'cc-input': HTMLCcInputElement;
   }
 }
 declare namespace LocalJSX {
@@ -62,12 +181,94 @@ declare namespace LocalJSX {
      */
     variant?: 'solid' | 'outline' | 'ghost';
   }
+  interface CcInput {
+    /**
+     * Disables the input
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * Error message — also puts the input in an error state
+     * @default ''
+     */
+    error?: string;
+    /**
+     * Helper text displayed below the input
+     * @default ''
+     */
+    hint?: string;
+    /**
+     * Label displayed above the input
+     * @default ''
+     */
+    label?: string;
+    /**
+     * Associates input with a form element id
+     * @default ''
+     */
+    name?: string;
+    /**
+     * Emitted when the input loses focus
+     */
+    onCcBlur?: (event: CcInputCustomEvent<void>) => void;
+    /**
+     * Emitted when the input gains focus
+     */
+    onCcFocus?: (event: CcInputCustomEvent<void>) => void;
+    /**
+     * Emitted on every input event with the current value
+     */
+    onCcInput?: (event: CcInputCustomEvent<string>) => void;
+    /**
+     * Placeholder text
+     * @default ''
+     */
+    placeholder?: string;
+    /**
+     * Makes the input read-only
+     * @default false
+     */
+    readonly?: boolean;
+    /**
+     * Marks the input as required
+     * @default false
+     */
+    required?: boolean;
+    /**
+     * Size variant
+     * @default 'md'
+     */
+    size?: 'sm' | 'md' | 'lg';
+    /**
+     * Input type
+     * @default 'text'
+     */
+    type?: 'text' | 'email' | 'password' | 'search' | 'url' | 'tel' | 'number';
+    /**
+     * Bound value
+     * @default ''
+     */
+    value?: string;
+  }
 
   interface CcButtonAttributes {
     variant: 'solid' | 'outline' | 'ghost';
     size: 'sm' | 'md' | 'lg';
     disabled: boolean;
     type: 'button' | 'submit' | 'reset';
+  }
+  interface CcInputAttributes {
+    type: 'text' | 'email' | 'password' | 'search' | 'url' | 'tel' | 'number';
+    value: string;
+    placeholder: string;
+    label: string;
+    hint: string;
+    error: string;
+    size: 'sm' | 'md' | 'lg';
+    disabled: boolean;
+    readonly: boolean;
+    required: boolean;
+    name: string;
   }
 
   interface IntrinsicElements {
@@ -76,6 +277,11 @@ declare namespace LocalJSX {
     } & {
       [K in keyof CcButton & keyof CcButtonAttributes as `attr:${K}`]?: CcButtonAttributes[K];
     } & { [K in keyof CcButton & keyof CcButtonAttributes as `prop:${K}`]?: CcButton[K] };
+    'cc-input': Omit<CcInput, keyof CcInputAttributes> & {
+      [K in keyof CcInput & keyof CcInputAttributes]?: CcInput[K];
+    } & { [K in keyof CcInput & keyof CcInputAttributes as `attr:${K}`]?: CcInputAttributes[K] } & {
+      [K in keyof CcInput & keyof CcInputAttributes as `prop:${K}`]?: CcInput[K];
+    };
   }
 }
 export { LocalJSX as JSX };
@@ -84,6 +290,8 @@ declare module '@stencil/core' {
     interface IntrinsicElements {
       'cc-button': LocalJSX.IntrinsicElements['cc-button'] &
         JSXBase.HTMLAttributes<HTMLCcButtonElement>;
+      'cc-input': LocalJSX.IntrinsicElements['cc-input'] &
+        JSXBase.HTMLAttributes<HTMLCcInputElement>;
     }
   }
 }
