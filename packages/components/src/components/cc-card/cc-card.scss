@@ -1,0 +1,103 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--cc-radius-lg);
+  overflow: hidden;
+  font-family: var(--cc-font-family-base);
+  background-color: var(--cc-color-bg-base);
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+
+  // Variants
+  &--elevated {
+    box-shadow: var(--cc-shadow-md);
+  }
+
+  &--outlined {
+    border: 1px solid var(--cc-color-border-default);
+    box-shadow: none;
+  }
+
+  &--flat {
+    background-color: var(--cc-color-bg-subtle);
+    box-shadow: none;
+  }
+
+  // Clickable
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: var(--cc-shadow-lg);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cc-color-focus);
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--cc-shadow-md);
+    }
+  }
+
+  // Media slot — full bleed, no padding
+  ::slotted([slot='media']) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  // Inner wrapper — receives padding
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &--padding-none &__inner {
+    padding: 0;
+  }
+
+  &--padding-sm &__inner {
+    padding: var(--cc-spacing-sm);
+  }
+
+  &--padding-md &__inner {
+    padding: var(--cc-spacing-md);
+  }
+
+  &--padding-lg &__inner {
+    padding: var(--cc-spacing-lg);
+  }
+
+  // Header slot
+  ::slotted([slot='header']) {
+    display: block;
+    margin-bottom: var(--cc-spacing-sm);
+  }
+
+  // Footer slot
+  &__body {
+    flex: 1;
+  }
+
+  ::slotted([slot='footer']) {
+    display: block;
+    margin-top: var(--cc-spacing-md);
+    padding-top: var(--cc-spacing-md);
+    border-top: 1px solid var(--cc-color-border-default);
+  }
+}
