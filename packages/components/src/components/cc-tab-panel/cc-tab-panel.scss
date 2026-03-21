@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-tab-panel {
+  padding: var(--cc-spacing-md) 0;
+  font-family: var(--cc-font-family-base);
+  font-size: var(--cc-font-size-md);
+  color: var(--cc-color-neutral-700);
+  animation: cc-tab-panel-in 150ms ease;
+}
+
+@keyframes cc-tab-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

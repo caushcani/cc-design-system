@@ -1,0 +1,45 @@
+:host {
+  display: inline-flex;
+}
+
+.cc-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cc-spacing-sm) var(--cc-spacing-md);
+  border: none;
+  background: transparent;
+  font-family: var(--cc-font-family-base);
+  font-size: var(--cc-font-size-sm);
+  font-weight: var(--cc-font-weight-medium);
+  color: var(--cc-color-neutral-500);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+  position: relative;
+  border-radius: 0;
+
+  &:focus-visible {
+    outline: 2px solid var(--cc-color-focus);
+    outline-offset: -2px;
+    border-radius: var(--cc-radius-sm);
+  }
+
+  &--active {
+    color: var(--cc-color-primary-600);
+    font-weight: var(--cc-font-weight-semibold);
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &:not(&--active):not(&--disabled):hover {
+    color: var(--cc-color-neutral-700);
+    background-color: var(--cc-color-neutral-50);
+  }
+}
