@@ -81,7 +81,7 @@ describe('cc-radio-group', () => {
 
     const fieldset = page.root!.shadowRoot!.querySelector('fieldset');
     expect(fieldset!.classList.contains('cc-radio-group--disabled')).toBe(true);
-    expect(fieldset!.disabled).toBe(true);
+    expect(fieldset!.hasAttribute('disabled')).toBe(true);
   });
 
   it('applies error class when error is present', async () => {

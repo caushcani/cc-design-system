@@ -63,7 +63,7 @@ describe('cc-select', () => {
 
     const select = page.root!.shadowRoot!.querySelector('select');
     const wrapper = page.root!.shadowRoot!.querySelector('.cc-select__wrapper');
-    expect(select!.disabled).toBe(true);
+    expect(select!.hasAttribute('disabled')).toBe(true);
     expect(wrapper!.classList.contains('cc-select__wrapper--disabled')).toBe(true);
   });
 

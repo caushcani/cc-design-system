@@ -12,7 +12,7 @@ describe('cc-button', () => {
     expect(button).not.toBeNull();
     expect(button!.classList.contains('cc-button--solid')).toBe(true);
     expect(button!.classList.contains('cc-button--md')).toBe(true);
-    expect(button!.disabled).toBe(false);
+    expect(button!.hasAttribute('disabled')).toBe(false);
   });
 
   it('applies variant class', async () => {
@@ -44,7 +44,7 @@ describe('cc-button', () => {
     });
 
     const button = page.root!.shadowRoot!.querySelector('button');
-    expect(button!.disabled).toBe(true);
+    expect(button!.hasAttribute('disabled')).toBe(true);
     expect(button!.getAttribute('aria-disabled')).toBe('true');
   });
 

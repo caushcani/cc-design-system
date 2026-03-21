@@ -41,7 +41,7 @@ describe('cc-tab', () => {
     });
 
     const btn = page.root!.shadowRoot!.querySelector('button');
-    expect(btn!.disabled).toBe(true);
+    expect(btn!.hasAttribute('disabled')).toBe(true);
     expect(btn!.classList.contains('cc-tab--disabled')).toBe(true);
   });
 
