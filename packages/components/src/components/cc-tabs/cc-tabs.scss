@@ -1,0 +1,62 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-tabs {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--cc-font-family-base);
+
+  &__tablist {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  &__panels {
+    flex: 1;
+  }
+
+  // Line variant — bottom border indicator
+  &--line &__tablist {
+    border-bottom: 2px solid var(--cc-color-border-default);
+    gap: var(--cc-spacing-xs);
+  }
+
+  &--line cc-tab {
+    margin-bottom: -2px; // overlap the border
+
+    &::part(button) {
+      border-bottom: 2px solid transparent;
+      border-radius: var(--cc-radius-sm) var(--cc-radius-sm) 0 0;
+    }
+  }
+
+  // Active indicator for line variant via slotted tab
+  &--line ::slotted(cc-tab[active]) {
+    border-bottom: 2px solid var(--cc-color-primary-500);
+  }
+
+  // Pills variant — filled background on active
+  &--pills &__tablist {
+    gap: var(--cc-spacing-xs);
+    background-color: var(--cc-color-neutral-100);
+    padding: var(--cc-spacing-xs);
+    border-radius: var(--cc-radius-lg);
+    width: fit-content;
+  }
+
+  &--pills ::slotted(cc-tab) {
+    border-radius: var(--cc-radius-md) !important;
+  }
+
+  &--pills ::slotted(cc-tab[active]) {
+    background-color: var(--cc-color-bg-base);
+    box-shadow: var(--cc-shadow-sm);
+    border-radius: var(--cc-radius-md);
+  }
+}
