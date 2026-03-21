@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-radio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--cc-spacing-sm);
+  cursor: pointer;
+  font-family: var(--cc-font-family-base);
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &__control-wrapper {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: inherit;
+    z-index: 1;
+  }
+
+  &__control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--cc-color-neutral-400);
+    border-radius: var(--cc-radius-full);
+    background-color: var(--cc-color-neutral-0);
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--cc-radius-full);
+    background-color: var(--cc-color-neutral-0);
+    opacity: 0;
+    transform: scale(0.5);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  // Checked state
+  &__input:checked + &__control {
+    background-color: var(--cc-color-primary-500);
+    border-color: var(--cc-color-primary-500);
+
+    .cc-radio__dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  // Focus ring
+  &__input:focus-visible + &__control {
+    box-shadow: 0 0 0 3px var(--cc-color-primary-100);
+    border-color: var(--cc-color-primary-500);
+  }
+
+  // Hover
+  &:not(&--disabled):hover &__input:not(:checked) + &__control {
+    border-color: var(--cc-color-primary-400);
+    background-color: var(--cc-color-primary-50);
+  }
+
+  &__label-text {
+    font-size: var(--cc-font-size-sm);
+    color: var(--cc-color-neutral-700);
+    line-height: var(--cc-font-line-height-normal);
+    user-select: none;
+  }
+}

@@ -1,0 +1,56 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.cc-radio-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  font-family: var(--cc-font-family-base);
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &__legend {
+    display: block;
+    margin-bottom: var(--cc-spacing-sm);
+    font-size: var(--cc-font-size-sm);
+    font-weight: var(--cc-font-weight-medium);
+    color: var(--cc-color-neutral-700);
+    padding: 0;
+    float: left;
+    width: 100%;
+  }
+
+  &__required {
+    color: var(--cc-color-danger-500);
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cc-spacing-sm);
+    clear: both;
+  }
+
+  &__message {
+    display: block;
+    margin-top: var(--cc-spacing-sm);
+    font-size: var(--cc-font-size-sm);
+
+    &--hint {
+      color: var(--cc-color-neutral-500);
+    }
+
+    &--error {
+      color: var(--cc-color-danger-500);
+    }
+  }
+}
