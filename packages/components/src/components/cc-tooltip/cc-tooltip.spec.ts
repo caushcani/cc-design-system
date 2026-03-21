@@ -3,7 +3,6 @@ import { CcTooltip } from './cc-tooltip';
 
 describe('cc-tooltip', () => {
   afterEach(() => jest.useRealTimers());
-
   it('renders the trigger slot', async () => {
     const page = await newSpecPage({
       components: [CcTooltip],
@@ -66,8 +65,6 @@ describe('cc-tooltip', () => {
   });
 
   it('hides on mouseleave', async () => {
-    jest.useFakeTimers();
-
     const page = await newSpecPage({
       components: [CcTooltip],
       html: `<cc-tooltip content="Bye"><button>Hover</button></cc-tooltip>`,
@@ -75,11 +72,15 @@ describe('cc-tooltip', () => {
 
     const trigger = page.root!.shadowRoot!.querySelector('.cc-tooltip__trigger') as HTMLElement;
 
+    // Show with real timers so waitForChanges doesn't hang
     trigger.dispatchEvent(new MouseEvent('mouseenter'));
     await page.waitForChanges();
 
+    // Only fake timers for the hide delay
+    jest.useFakeTimers();
     trigger.dispatchEvent(new MouseEvent('mouseleave'));
-    jest.runAllTimers();
+    jest.advanceTimersByTime(200);
+    jest.useRealTimers();
     await page.waitForChanges();
 
     const tooltip = page.root!.shadowRoot!.querySelector('.cc-tooltip');

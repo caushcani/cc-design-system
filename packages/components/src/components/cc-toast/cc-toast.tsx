@@ -38,12 +38,17 @@ export class CcToast {
   @State() private hiding = false;
 
   private timer?: ReturnType<typeof setTimeout>;
+  private animTimer?: ReturnType<typeof setTimeout>;
 
   componentDidLoad() {
-    // Trigger enter animation on next frame
-    requestAnimationFrame(() => {
+    // Trigger enter animation on next frame (falls back to sync in test env)
+    if (typeof requestAnimationFrame !== 'undefined') {
+      requestAnimationFrame(() => {
+        this.visible = true;
+      });
+    } else {
       this.visible = true;
-    });
+    }
 
     if (this.duration > 0) {
       this.timer = setTimeout(() => this.dismiss(), this.duration);
@@ -52,6 +57,7 @@ export class CcToast {
 
   disconnectedCallback() {
     clearTimeout(this.timer);
+    clearTimeout(this.animTimer);
   }
 
   private dismiss = () => {
@@ -59,7 +65,7 @@ export class CcToast {
     this.hiding = true;
 
     // Wait for exit animation before emitting
-    setTimeout(() => {
+    this.animTimer = setTimeout(() => {
       this.ccClose.emit();
     }, 250);
   };

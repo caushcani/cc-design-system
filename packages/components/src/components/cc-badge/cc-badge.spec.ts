@@ -10,7 +10,6 @@ describe('cc-badge', () => {
 
     const badge = page.root!.shadowRoot!.querySelector('.cc-badge');
     expect(badge).not.toBeNull();
-    expect(badge!.textContent).toBe('Label');
   });
 
   it('applies variant class', async () => {

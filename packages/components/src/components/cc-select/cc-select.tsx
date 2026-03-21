@@ -56,8 +56,10 @@ export class CcSelect {
 
   componentDidLoad() {
     this.syncOptions();
-    this.observer = new MutationObserver(() => this.syncOptions());
-    this.observer.observe(this.el, { childList: true, subtree: true, characterData: true });
+    if (typeof MutationObserver !== 'undefined') {
+      this.observer = new MutationObserver(() => this.syncOptions());
+      this.observer.observe(this.el, { childList: true, subtree: true, characterData: true });
+    }
   }
 
   disconnectedCallback() {
@@ -120,7 +122,7 @@ export class CcSelect {
           >
             {!hasOptions ? (
               <option value="" disabled selected>
-                No options available
+                {this.placeholder || 'No options available'}
               </option>
             ) : (
               [
